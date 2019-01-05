@@ -6,6 +6,11 @@ import sys
 case_with = 6
 case_height = 10
 
+ptr = {
+	'x' : 0,
+	'y' : 0
+}
+
 blocks = ['i', 'l', 'n', 'y', 'f', 'p', 't', 'u', 'v', 'w', 'x', 'z']
 	
 block = {
@@ -70,8 +75,6 @@ pullet = {
 }
 
 
-
-
 # -------- func --------
 
 def display_case(case):
@@ -80,27 +83,34 @@ def display_case(case):
                         sys.stdout.write(case[j][i] + "■" + pullet['END'])
 		sys.stdout.write("\n")
 
-def put_block(case, locate, block, color):
+def put_block(case, block, color):
 	for j in range(len(block)):
 		for i in range(len(block[j])):
 			if block[j][i]:
-				case[locate['y'] + j][locate['x'] + i] = color
+				case[ptr['y'] + j][ptr['x'] + i] = color
 	return case
 
+def search_next(case, ptr):
+	for j in range(ptr['y'], len(case)):
+		for i in range(len(case[j])):
+			if case[j][i] == pullet['EMPTY']:
+				ptr['x'] = i
+				ptr['y'] = j
+				return ptr
 
 # -------- main --------
 
-locate = {
-	'x' : 0,
-	'y' : 0
-}
 
+# init case
 case = [[pullet['EMPTY'] for i in range(case_with)] for j in range(case_height)]
 
-caset = put_block(case, locate, block['v'], pullet['v'])
+# test put
+put_block(case, block['i'], pullet['i'])
 
-
+# search next position
+search_next(case, ptr)
 
 display_case(case)
+print(ptr)
 
 
