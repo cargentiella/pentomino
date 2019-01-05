@@ -110,6 +110,8 @@ put_block(case, block['i'], pullet['i'])
 # search next position
 search_next(case, ptr)
 
+put_block(case, block['f'], pullet['f'])
+
 display_case(case)
 print(ptr)
 
