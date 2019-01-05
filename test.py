@@ -11,9 +11,14 @@ class Position:
 	x = 0
 	y = 0
 
-blocks = ['i', 'l', 'n', 'y', 'f', 'p', 't', 'u', 'v', 'w', 'x', 'z']
+blocks = ['f', 'i', 'l', 'n', 'p', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 origin = {
+	'f' : [	[0, 1, 1, 0, 0],
+		[1, 1, 0, 0, 0],
+		[0, 1, 0, 0, 0],
+		[0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0]	],
 	'i' : [	[1, 1, 1, 1, 1], 
 		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0],
@@ -25,16 +30,6 @@ origin = {
 		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0]	],
 	'n' : [	[0, 1, 1, 1, 0],
-		[1, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'y' : [	[1, 1, 1, 1, 0],
-		[0, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'f' : [	[0, 1, 1, 0, 0],
 		[1, 1, 0, 0, 0],
 		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0],
@@ -67,6 +62,11 @@ origin = {
 	'x' : [	[0, 1, 0, 0, 0],
 		[1, 1, 1, 0, 0],
 		[0, 1, 0, 0, 0],
+		[0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0]	],
+	'y' : [	[1, 1, 1, 1, 0],
+		[0, 1, 0, 0, 0],
+		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0]	],
 	'z' : [	[1, 1, 0, 0, 0],
@@ -112,33 +112,33 @@ class Block:
 
 
 pattern = {
+	'f' : [0, 1, 2, 3, 4, 5, 6, 7],
 	'i' : [0, 1],
-	'l' : [0, 1],
-	'n' : ,
-	'y' : ,
-	'f' : ,
-	'p' : ,
-	't' : ,
-	'u' : ,
-	'v' : ,
-	'w' : ,
-	'x' : ,
-	'z' : 
+	'l' : [0, 1, 2, 3, 4, 5, 6, 7],
+	'n' : [0, 1, 2, 3, 4, 5, 6, 7],
+	'p' : [0, 1, 2, 3, 4, 5, 6, 7],
+	't' : [0, 1, 2,       5],
+	'u' : [0, 1, 2,       5],
+	'v' : [0, 1, 2, 3],
+	'w' : [0, 1, 2, 3],
+	'x' : [0],
+	'y' : [0, 1, 2, 3, 4, 5, 6, 7],
+	'z' : [0, 1, 2, 3]
 }
 
 pullet = {
 	'EMPTY' : '\033[30m',
+	'f' : '\033[33m',
 	'i' : '\033[31m',
 	'l' : '\033[35m',
 	'n' : '\033[32m',
-	'y' : '\033[37m',
-	'f' : '\033[37m',
 	'p' : '\033[36m',
 	't' : '\033[35m',
 	'u' : '\033[36m',
 	'v' : '\033[31m',
-	'w' : '\033[33m',
-	'x' : '\033[33m',
+	'w' : '\033[37m',
+	'x' : '\033[37m',
+	'y' : '\033[33m',
 	'z' : '\033[32m',
 	'END' : '\033[0m'
 }
@@ -210,9 +210,20 @@ case = [[pullet['EMPTY'] for i in range(case_with)] for j in range(case_height)]
 # test put
 blk = copy.deepcopy(Block('i'))
 
-print(blk.turn(0))
+#print(blk.turn(0))
 
-#put_block(case, current, blk, pullet['i'])
+character = 'w'
+
+for c in range(len(pattern[character])):
+	current.x = 0
+	current.y = 0
+	case = [[pullet['EMPTY'] for i in range(case_with)] for j in range(case_height)]
+	blk = copy.deepcopy(Block(character))
+	blk = copy.deepcopy(blk.turn(pattern[character][c]))
+	put_block(case, current, blk, pullet[character])
+	display_case(case)
+
+#put_block(case, current, blk, pullet['w'])
 
 # search next position
 #current = move_next(case, current)
