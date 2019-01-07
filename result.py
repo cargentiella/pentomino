@@ -126,80 +126,106 @@ pattern = {
 	'z' : [0, 1, 2, 3]
 }
 
-pullet = {
-	'EMPTY' : '\033[30m',
-	'TEMP' : '\033[34m',
-	'f' : '\033[33m',
-	'i' : '\033[31m',
-	'l' : '\033[35m',
-	'n' : '\033[32m',
-	'p' : '\033[36m',
-	't' : '\033[35m',
-	'u' : '\033[36m',
-	'v' : '\033[31m',
-	'w' : '\033[37m',
-	'x' : '\033[37m',
-	'y' : '\033[33m',
-	'z' : '\033[32m',
-	'END' : '\033[0m'
+cell_value = {
+	'f' : 1,
+	'i' : 2,
+	'l' : 3,
+	'n' : 4,
+	'p' : 5,
+	't' : 6,
+	'u' : 7,
+	'v' : 8,
+	'w' : 9,
+	'x' : 10,
+	'y' : 11,
+	'z' : 12,
+	'TMP' : 13,
 }
+
+pullet_end = '\033[0m'
+
+pullet = [	'\033[30m', '\033[33m', '\033[31m', '\033[35m',
+		'\033[32m', '\033[36m', '\033[35m', '\033[36m',
+		'\033[31m', '\033[37m', '\033[37m', '\033[33m',
+		'\033[32m', '\033[34m'
+]
 
 
 # -------- func --------
 
-def display_case(case):
+def display_case(_case):
         for j in range(CASE_HEIGHT):
                 for i in range(CASE_WITH):
-                        sys.stdout.write(case[j][i] + "■" + pullet['END'])
+                        sys.stdout.write(pullet[case[j][i]] + "■" + pullet_end)
 		sys.stdout.write("\n")
 
-def put_block(_case, _ptr, _block, _color):
+def put_block(_case, _ptr, _block, _value):
 	for j in range(len(_block)):
 		for i in range(len(_block[j])):
 			if _block[j][i]:
-				_case[_ptr.y + j][_ptr.x + i] = _color
-	return _case
+				_case[_ptr.y + j][_ptr.x + i] = _value
 
-def move_next(case, ptr):
-	next = Position
+def move_next(_case, _ptr):
+# return next empty cell
+	_next = Position
 
-	for j in range(ptr.y, len(case)):
-		for i in range(len(case[j])):
-			if case[j][i] == pullet['EMPTY']:
-				next.x = i
-				next.y = j
-				return next
+	for j in range(_ptr.y, CASE_HEIGHT):
+		for i in range(CASE_WITH):
+			if _case[j][i] <> 0:
+				_next.x = i
+				_next.y = j
+				return _next
 
-def adjust_positioning(case, ptr, block):
-	temp = Position
+def adjust_positioning(_case, _ptr, _block):
+# return position that adjust _ptr and block head
+	_adjust = Position
 
-	for j in range(len(block)):
-		for i in range(len(block[j])):
-			if block[j][i]:
-				adjust.x = ptr.x - i
-				adjust.y = ptr.y - j
-				return temp
+	for j in range(len(_block)):
+		for i in range(len(_block[j])):
+			if _block[j][i]:
+				_adjust.x = _ptr.x - i
+				_adjust.y = _ptr.y - j
+				return _adjust
 
-def can_put_block(case, ptr, block):
-	for j in range(len(block)):
-		for i in range(len(block[j])):
-			if block[j][i]:
+def can_put_block(_case, _ptr, _block):
+	for j in range(len(_block)):
+		for i in range(len(_block[j])):
+			if _block[j][i]:
 				# block is over case
-				if ptr.x + i < 0 or CASE_WITH <= ptr.x:
+				if _ptr.x + i < 0 or CASE_WITH <= _ptr.x:
 					return False
-				if ptr.y + j < 0 or CASE_HEIGHT < ptr.y:
+				# block is over case
+				if _ptr.y + j < 0 or CASE_HEIGHT < _ptr.y:
 					return False
-				if case[ptr.y + j][ptr.x + i] <> pullet['EMPTY']:
+				# block is over another block
+				if _case[_ptr.y + j][_ptr.x + i] <> 0:
 					return False
 	return True
 
-def not_have_island(_case, _ptr, _block):
-	temporary = [[pullet['EMPTY'] for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
-	area = [0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
-	verified = [0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
+def island_area(_case, _verified, _x, _y):
+	_area = 1
+	_verified[_y][_x] = 1
 
-	temporary = copy.deepcopy(put_block(_case, _ptr, _block, pallet['TEMP']))
-	
+	if 0 < _y and not _verified[_y - 1][_x] and _case[_y - 1][_x] == 0:
+		_area += island_area(_case, _verified, _x, _y - 1)
+	if _y < CASE_HEIGHT - 1 and not _verified[_y + 1][_x] and _case[_y + 1][_x] == 0:
+		_area += island_area(_case, _verified, _x, _y + 1)		
+	if 0 < _x and not _verified[_y][_x - 1] and _case[_y][_x - 1] == 0:
+		_area += island_area(_case, _verified, _x - 1, _y)
+	if _x < CASE_WITH - 1 and not _verified[_y][_x + 1] and _case[_y][_x + 1] == 0:
+		_area += island_area(_case, _verified, _x + 1, _y)
+	return _area
+
+def not_have_island(_case, _ptr):
+	_verified = [[0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
+
+	for j in range(_ptr.y, CASE_HEIGHT):
+		for i in range(CASE_WITH):
+			if _case[j][i] == 0 and _verified[j][i] == 0:
+				if island_area(_case, _verified, i, j) < 5:
+					return False
+	return True
+
 
 
 #def trun_block(block, type):
@@ -214,7 +240,7 @@ adjust = Position
 blk = [[0 for i in range(5)] for j in range(5)]
 
 # init case
-case = [[pullet['EMPTY'] for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
+case = [[0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
 
 
 # test put
@@ -222,16 +248,18 @@ blk = copy.deepcopy(Block('i'))
 
 #print(blk.turn(0))
 
-character = 'w'
+character = 'n'
 
 for c in range(len(pattern[character])):
 	current.x = 0
 	current.y = 0
-	case = [[pullet['EMPTY'] for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
+	case = [[0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
 	blk = copy.deepcopy(Block(character))
 	blk = copy.deepcopy(blk.turn(pattern[character][c]))
-	put_block(case, current, blk, pullet[character])
+	put_block(case, current, blk, cell_value[character])
 	display_case(case)
+
+	print(not_have_island(case, current))
 
 #put_block(case, current, blk, pullet['w'])
 
