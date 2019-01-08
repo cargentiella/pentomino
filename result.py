@@ -4,12 +4,19 @@ import copy
 
 # -------- init --------
 
-CASE_WITH = 6
-CASE_HEIGHT = 10
+BOX_WITH = 6
+BOX_HEIGHT = 10
 
 class Position:
 	x = 0
 	y = 0
+	def __init__(self):
+		self.x = 0
+		self.y = 0
+
+	def __init__(self, x, y):
+		self.x = _x
+		self.y = _y
 
 blocks = ['f', 'i', 'l', 'n', 'p', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -111,7 +118,7 @@ class Block:
 		return _block
 
 
-pattern = {
+turn_pattern = {
 	'f' : [0, 1, 2, 3, 4, 5, 6, 7],
 	'i' : [0, 1],
 	'l' : [0, 1, 2, 3, 4, 5, 6, 7],
@@ -126,7 +133,7 @@ pattern = {
 	'z' : [0, 1, 2, 3]
 }
 
-cell_value = {
+block_value = {
 	'f' : 1,
 	'i' : 2,
 	'l' : 3,
@@ -153,84 +160,105 @@ pullet = [	'\033[30m', '\033[33m', '\033[31m', '\033[35m',
 
 # -------- func --------
 
-def display_case(_case):
-        for j in range(CASE_HEIGHT):
-                for i in range(CASE_WITH):
-                        sys.stdout.write(pullet[case[j][i]] + "■" + pullet_end)
+def display_box(_box):
+        for j in range(BOX_HEIGHT):
+                for i in range(BOX_WITH):
+                        sys.stdout.write(pullet[_box[j][i]] + "■" + pullet_end)
 		sys.stdout.write("\n")
 
-def put_block(_case, _ptr, _block, _value):
+def put_block(_box, _ptr, _block, _value):
 	for j in range(len(_block)):
 		for i in range(len(_block[j])):
 			if _block[j][i]:
-				_case[_ptr.y + j][_ptr.x + i] = _value
+				_box[_ptr[1] + j][_ptr[0] + i] = _value
 
-def move_next(_case, _ptr):
+def move_next(_box, _ptr):
 # return next empty cell
-	_next = Position
+	_next = [0, 0]
 
-	for j in range(_ptr.y, CASE_HEIGHT):
-		for i in range(CASE_WITH):
-			if _case[j][i] <> 0:
-				_next.x = i
-				_next.y = j
+	for j in range(_ptr[1], BOX_HEIGHT):
+		for i in range(BOX_WITH):
+			if _box[j][i] == 0:
+				_next[0] = i
+				_next[1] = j
 				return _next
 
-def adjust_positioning(_case, _ptr, _block):
+def adjust_position(_box, _ptr, _block):
 # return position that adjust _ptr and block head
-	_adjust = Position
-
+	_adjust = [0, 0]
 	for j in range(len(_block)):
 		for i in range(len(_block[j])):
 			if _block[j][i]:
-				_adjust.x = _ptr.x - i
-				_adjust.y = _ptr.y - j
+				_adjust[0] = _ptr[0] - i
+				_adjust[1] = _ptr[1] - j
 				return _adjust
 
-def can_put_block(_case, _ptr, _block):
+def can_put_block(_box, _ptr, _block):
 	for j in range(len(_block)):
 		for i in range(len(_block[j])):
 			if _block[j][i]:
-				# block is over case
-				if _ptr.x + i < 0 or CASE_WITH <= _ptr.x:
+				# block is over box
+				if _ptr[0] + i < 0 or BOX_WITH <= _ptr[0] + i:
 					return False
-				# block is over case
-				if _ptr.y + j < 0 or CASE_HEIGHT < _ptr.y:
+				# block is over box
+				if _ptr[1] + j < 0 or BOX_HEIGHT <= _ptr[1] + j:
 					return False
 				# block is over another block
-				if _case[_ptr.y + j][_ptr.x + i] <> 0:
+				if _box[_ptr[1] + j][_ptr[0] + i] <> 0:
 					return False
 	return True
 
-def island_area(_case, _verified, _x, _y):
+def island_area(_box, _verified, _x, _y):
 	_area = 1
 	_verified[_y][_x] = 1
 
-	if 0 < _y and not _verified[_y - 1][_x] and _case[_y - 1][_x] == 0:
-		_area += island_area(_case, _verified, _x, _y - 1)
-	if _y < CASE_HEIGHT - 1 and not _verified[_y + 1][_x] and _case[_y + 1][_x] == 0:
-		_area += island_area(_case, _verified, _x, _y + 1)		
-	if 0 < _x and not _verified[_y][_x - 1] and _case[_y][_x - 1] == 0:
-		_area += island_area(_case, _verified, _x - 1, _y)
-	if _x < CASE_WITH - 1 and not _verified[_y][_x + 1] and _case[_y][_x + 1] == 0:
-		_area += island_area(_case, _verified, _x + 1, _y)
+	if 0 < _y and not _verified[_y - 1][_x] and _box[_y - 1][_x] == 0:
+		_area += island_area(_box, _verified, _x, _y - 1)
+	if _y < BOX_HEIGHT - 1 and not _verified[_y + 1][_x] and _box[_y + 1][_x] == 0:
+		_area += island_area(_box, _verified, _x, _y + 1)		
+	if 0 < _x and not _verified[_y][_x - 1] and _box[_y][_x - 1] == 0:
+		_area += island_area(_box, _verified, _x - 1, _y)
+	if _x < BOX_WITH - 1 and not _verified[_y][_x + 1] and _box[_y][_x + 1] == 0:
+		_area += island_area(_box, _verified, _x + 1, _y)
 	return _area
 
-def not_have_island(_case, _ptr):
-	_verified = [[0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
+def not_have_island(_box, _ptr):
+	_verified = [[0 for i in range(BOX_WITH)] for j in range(BOX_HEIGHT)]
 
-	for j in range(_ptr.y, CASE_HEIGHT):
-		for i in range(CASE_WITH):
-			if _case[j][i] == 0 and _verified[j][i] == 0:
-				if island_area(_case, _verified, i, j) < 5:
+	for j in range(_ptr[1], BOX_HEIGHT):
+		for i in range(BOX_WITH):
+			if _box[j][i] == 0 and _verified[j][i] == 0:
+				if island_area(_box, _verified, i, j) < 5:
 					return False
 	return True
 
+def no_more_block(_used):
+	return len(_used) == 12
 
+def put_piece(box, ptr, used):
+	adjust = [0, 0]
 
-#def trun_block(block, type):
-	
+	for block in blocks:
+		if block not in used:
+			for turn in turn_pattern[block]:
+				
+				piece = Block(block)
+				piece = copy.deepcopy(piece.turn(turn))
 
+				adjust = adjust_position(box, ptr, piece)
+				if can_put_block(box, adjust, piece):
+					_box = copy.deepcopy(box)
+					_used = copy.deepcopy(used)
+					_ptr = [0, 0]
+
+					put_block(_box, adjust, piece, block_value[block])
+					_used.append(block)
+					if no_more_block(_used):
+						display_box(_box)
+						print('----------------')
+					elif not_have_island(_box, ptr):
+						_ptr = move_next(_box, ptr)
+						put_piece(_box, _ptr, _used)
 
 
 # -------- main --------
@@ -239,40 +267,11 @@ current = Position
 adjust = Position
 blk = [[0 for i in range(5)] for j in range(5)]
 
-# init case
-case = [[0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
+# init box
+box = [[0 for i in range(BOX_WITH)] for j in range(BOX_HEIGHT)]
+ptr = [0, 0]
+used = []
 
-
-# test put
-blk = copy.deepcopy(Block('i'))
-
-#print(blk.turn(0))
-
-character = 'n'
-
-for c in range(len(pattern[character])):
-	current.x = 0
-	current.y = 0
-	case = [[0 for i in range(CASE_WITH)] for j in range(CASE_HEIGHT)]
-	blk = copy.deepcopy(Block(character))
-	blk = copy.deepcopy(blk.turn(pattern[character][c]))
-	put_block(case, current, blk, cell_value[character])
-	display_case(case)
-
-	print(not_have_island(case, current))
-
-#put_block(case, current, blk, pullet['w'])
-
-# search next position
-#current = move_next(case, current)
-#adjust = adjust_positioning(case, current, block['u'])
-
-#if can_put_block(case, adjust, block['u']):
-#	put_block(case, adjust, block['u'], pullet['u'])
-
-#put_block(case, block['f'], pullet['f'])
-
-#display_case(case)
-#print(ptr)
+put_piece(box, ptr, used)
 
 
