@@ -7,17 +7,6 @@ import copy
 BOX_WITH = 6
 BOX_HEIGHT = 10
 
-class Position:
-	x = 0
-	y = 0
-	def __init__(self):
-		self.x = 0
-		self.y = 0
-
-	def __init__(self, x, y):
-		self.x = _x
-		self.y = _y
-
 blocks = ['f', 'i', 'l', 'n', 'p', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 block_figure = {
@@ -146,7 +135,6 @@ block_value = {
 	'x' : 10,
 	'y' : 11,
 	'z' : 12,
-	'TMP' : 13,
 }
 
 pullet_end = '\033[0m'
@@ -154,7 +142,7 @@ pullet_end = '\033[0m'
 pullet = [	'\033[30m', '\033[33m', '\033[31m', '\033[35m',
 		'\033[32m', '\033[36m', '\033[35m', '\033[36m',
 		'\033[31m', '\033[37m', '\033[37m', '\033[33m',
-		'\033[32m', '\033[34m'
+		'\033[32m'
 ]
 
 
@@ -263,8 +251,6 @@ def put_piece(box, ptr, used):
 
 # -------- main --------
 
-current = Position
-adjust = Position
 blk = [[0 for i in range(5)] for j in range(5)]
 
 # init box
