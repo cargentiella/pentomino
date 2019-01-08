@@ -1,0 +1,20 @@
+
+
+def display_case(_case):
+def put_block(_case, _ptr, _block, _value):
+def move_next(_case, _ptr):
+def adjust_positioning(_case, _ptr, _block):
+def can_put_block(_case, _ptr, _block):
+def island_area(_case, _verified, _x, _y):
+def not_have_island(_case, _ptr):
+
+
+
+	used = []
+
+	for piece in blocks:
+		if piece not in used:
+
+
+
+

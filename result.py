@@ -13,7 +13,7 @@ class Position:
 
 blocks = ['f', 'i', 'l', 'n', 'p', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-origin = {
+block_figure = {
 	'f' : [	[0, 1, 1, 0, 0],
 		[1, 1, 0, 0, 0],
 		[0, 1, 0, 0, 0],
@@ -79,7 +79,7 @@ origin = {
 class Block:
 	def __init__(self, type):
 		self.figure = [[0 for i in range(5)] for j in range(5)]
-		self.figure = copy.deepcopy(origin[type])
+		self.figure = copy.deepcopy(block_figure[type])
 
 	def turn(self, transform):
 		if transform % 2 == 1:
