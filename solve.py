@@ -1,8 +1,11 @@
 # coding: utf-8
 import sys
 import copy
+import csv
 
 # -------- init --------
+
+path = 'solution.txt'
 
 BOX_WITH = 6
 BOX_HEIGHT = 10
@@ -223,6 +226,12 @@ def not_have_island(_box, _ptr):
 def no_more_block(_used):
 	return len(_used) == 12
 
+def write_solution(_box):
+	with open(path, 'a') as file:
+		writer = csv.writer(file, lineterminator=',')
+		writer.writerows(_box)
+		file.write('\n')
+
 def put_piece(box, ptr, used):
 	adjust = [0, 0]
 
@@ -244,6 +253,7 @@ def put_piece(box, ptr, used):
 					if no_more_block(_used):
 						display_box(_box)
 						print('----------------')
+						write_solution(_box)
 					elif not_have_island(_box, ptr):
 						_ptr = move_next(_box, ptr)
 						put_piece(_box, _ptr, _used)
@@ -259,5 +269,7 @@ ptr = [0, 0]
 used = []
 
 put_piece(box, ptr, used)
+
+file.close
 
 
