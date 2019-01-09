@@ -6,7 +6,7 @@ import csv
 
 # -------- init --------
 
-path = 'solution.txt'
+path = 'solution_2d.txt'
 
 BOX_WITH = 6
 BOX_HEIGHT = 10
