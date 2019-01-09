@@ -151,11 +151,6 @@ pullet = [	'\033[30m', '\033[33m', '\033[31m', '\033[35m',
 
 # -------- func --------
 
-def display_box(_box):
-        for j in range(BOX_HEIGHT):
-                for i in range(BOX_WITH):
-                        sys.stdout.write(pullet[_box[j][i]] + "■" + pullet_end)
-		sys.stdout.write("\n")
 
 def put_block(_box, _ptr, _block, _value):
 	for j in range(len(_block)):
@@ -232,7 +227,7 @@ def write_solution(_box):
 		writer.writerows(_box)
 		file.write('\n')
 
-def put_piece_recursive(box, ptr, used):
+def put_piece(box, ptr, used):
 	adjust = [0, 0]
 
 	for block in blocks:
@@ -256,18 +251,34 @@ def put_piece_recursive(box, ptr, used):
 						write_solution(_box)
 					elif not_have_island(_box, ptr):
 						_ptr = move_next(_box, ptr)
-						put_piece_recursive(_box, _ptr, _used)
+						put_piece(_box, _ptr, _used)
 
 
 # -------- main --------
 
-blk = [[0 for i in range(5)] for j in range(5)]
+#blk = [[0 for i in range(5)] for j in range(5)]
 
 # init box
-box = [[0 for i in range(BOX_WITH)] for j in range(BOX_HEIGHT)]
-ptr = [0, 0]
-used = []
+#box = [[0 for i in range(BOX_WITH)] for j in range(BOX_HEIGHT)]
+#ptr = [0, 0]
+#used = []
 
-put_piece_recursive(box, ptr, used)
+#put_piece(box, ptr, used)
 
+#file.close
+def display_box(_line):
+        for j in range(BOX_HEIGHT):
+                for i in range(BOX_WITH):
+                        sys.stdout.write(pullet[int(_line[j * BOX_WITH + i])] + "■" + pullet_end)
+		sys.stdout.write("\n")
+
+
+file = open(path, 'r')
+reader = csv.reader(file)
+
+for line in reader:
+	display_box(line)
+	print('------------')
+	
+file.close
 
