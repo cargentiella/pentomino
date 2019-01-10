@@ -1,11 +1,19 @@
 # coding: utf-8
 import sys
+import os
 import copy
 import csv
 
 # -------- init --------
 
-path = 'solution.txt'
+args = sys.argv
+if len(args) == 2:
+	path = args[1]
+	OUTPUT = True
+
+if OUTPUT:
+	file = open(path, 'w')
+	writer = csv.writer(file, lineterminator=',')
 
 BOX_WITH = 6
 BOX_HEIGHT = 10
@@ -13,71 +21,51 @@ BOX_HEIGHT = 10
 blocks = ['f', 'i', 'l', 'n', 'p', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 block_figure = {
-	'f' : [	[0, 1, 1, 0, 0],
-		[1, 1, 0, 0, 0],
-		[0, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
+	'f' : [	[0, 1, 1],
+		[1, 1, 0],
+		[0, 1, 0]	],
 	'i' : [	[1, 1, 1, 1, 1], 
 		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0]	],
-	'l' : [	[1, 1, 1, 1, 0],
-		[1, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'n' : [	[0, 1, 1, 1, 0],
-		[1, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'p' : [	[1, 1, 1, 0, 0],
-		[1, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	't' : [	[1, 1, 1, 0, 0],
-		[0, 1, 0, 0, 0],
-		[0, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'u' : [	[1, 1, 1, 0, 0],
-		[1, 0, 1, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'v' : [	[1, 1, 1, 0, 0],
-		[0, 0, 1, 0, 0],
-		[0, 0, 1, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'w' : [	[1, 1, 0, 0, 0],
-		[0, 1, 1, 0, 0],
-		[0, 0, 1, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'x' : [	[0, 1, 0, 0, 0],
-		[1, 1, 1, 0, 0],
-		[0, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'y' : [	[1, 1, 1, 1, 0],
-		[0, 1, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	],
-	'z' : [	[1, 1, 0, 0, 0],
-		[0, 1, 0, 0, 0],
-		[0, 1, 1, 0, 0],
-		[0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0]	]
+	'l' : [	[1, 1, 1, 1],
+		[1, 0, 0, 0],
+		[0, 0, 0, 0],
+		[0, 0, 0, 0]	],
+	'n' : [	[0, 1, 1, 1],
+		[1, 1, 0, 0],
+		[0, 0, 0, 0],
+		[0, 0, 0, 0]	],
+	'p' : [	[1, 1, 1],
+		[1, 1, 0],
+		[0, 0, 0]	],
+	't' : [	[1, 1, 1],
+		[0, 1, 0],
+		[0, 1, 0]	],
+	'u' : [	[1, 1, 1],
+		[1, 0, 1],
+		[0, 0, 0]	],
+	'v' : [	[1, 1, 1],
+		[0, 0, 1],
+		[0, 0, 1]	],
+	'w' : [	[1, 1, 0],
+		[0, 1, 1],
+		[0, 0, 1]	],
+	'x' : [	[0, 1, 0],
+		[1, 1, 1],
+		[0, 1, 0]	],
+	'y' : [	[1, 1, 1, 1],
+		[0, 1, 0, 0],
+		[0, 0, 0, 0],
+		[0, 0, 0, 0]	],
+	'z' : [	[1, 1, 0],
+		[0, 1, 0],
+		[0, 1, 1]	]
 }
 
 class Block:
 	def __init__(self, type):
-		self.figure = [[0 for i in range(5)] for j in range(5)]
 		self.figure = copy.deepcopy(block_figure[type])
 
 	def turn(self, transform):
@@ -91,22 +79,25 @@ class Block:
 		return self.figure
 
 	def turn_mirror(self, block):
-		_block = [[0 for i in range(5)] for j in range(5)]
-		for j in range(5):
-			for i in range(5):
+		_size = len(block)
+		_block = [[0 for i in range(_size)] for j in range(_size)]
+		for j in range(_size):
+			for i in range(_size):
 				_block[j][i] = block[i][j]
 		return _block
 	def turn_row(self, block):
-		_block = [[0 for i in range(5)] for j in range(5)]
-		for j in range(5):
-			for i in range(5):
-				_block[j][i] = block[4 - j][i]
+		_size = len(block)
+		_block = [[0 for i in range(_size)] for j in range(_size)]
+		for j in range(_size):
+			for i in range(_size):
+				_block[j][i] = block[_size - 1 - j][i]
 		return _block
 	def turn_col(self, block):
-		_block = [[0 for i in range(5)] for j in range(5)]
-		for j in range(5):
-			for i in range(5):
-				_block[j][i] = block[j][4 - i]
+		_size = len(block)
+		_block = [[0 for i in range(_size)] for j in range(_size)]
+		for j in range(_size):
+			for i in range(_size):
+				_block[j][i] = block[j][_size - 1 - i]
 		return _block
 
 
@@ -227,10 +218,8 @@ def no_more_block(_used):
 	return len(_used) == 12
 
 def write_solution(_box):
-	with open(path, 'a') as file:
-		writer = csv.writer(file, lineterminator=',')
-		writer.writerows(_box)
-		file.write('\n')
+	writer.writerows(_box)
+	file.write('\n')
 
 def put_piece_recursive(box, ptr, used):
 	adjust = [0, 0]
@@ -252,16 +241,15 @@ def put_piece_recursive(box, ptr, used):
 					_used.append(block)
 					if no_more_block(_used):
 						display_box(_box)
-						print('----------------')
-						write_solution(_box)
+						print('------------')
+						if OUTPUT:
+							write_solution(_box)
 					elif not_have_island(_box, ptr):
 						_ptr = move_next(_box, ptr)
 						put_piece_recursive(_box, _ptr, _used)
 
 
 # -------- main --------
-
-blk = [[0 for i in range(5)] for j in range(5)]
 
 # init box
 box = [[0 for i in range(BOX_WITH)] for j in range(BOX_HEIGHT)]
@@ -270,4 +258,6 @@ used = []
 
 put_piece_recursive(box, ptr, used)
 
+if OUTPUT:
+	file.close
 
