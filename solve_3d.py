@@ -71,7 +71,7 @@ class Block:
 		self.figure = copy.deepcopy(block_figure[type])
 
 	def turn(self, transform):
-		_size = len(self.figure)
+		_size = len(self.figure[0])
 
 		if transform % 2 == 1:
 			self.figure = copy.deepcopy(self.turn_mirror(self.figure, _size))
@@ -163,14 +163,14 @@ def display_cube(_cube):
 		for j in range(CUBE_HEIGHT):
 			for i in range(CUBE_WITH):
 				sys.stdout.write(pullet[_cube[k][j][i]] + "■" + pullet_end)
-			sys.stdout.write("  ")
+			sys.stdout.write("+")
 		sys.stdout.write("\n")
 
 def put_block(_cube, _ptr, _block, _value):
-	for k in range(len(_cube)):
-		for j in range(len(_cube[k])):
-			for i in range(len(_cube[k][j])):
-				if _cube[k][j][i]:
+	for k in range(len(_block)):
+		for j in range(len(_block[k])):
+			for i in range(len(_block[k][j])):
+				if _block[k][j][i]:
 					_cube[_ptr[2] + k][_ptr[1] + j][_ptr[0] + i] = _value
 
 def move_next(_cube, _ptr):
@@ -189,20 +189,20 @@ def move_next(_cube, _ptr):
 def adjust_position(_cube, _ptr, _block):
 # return position that adjust _ptr and block head
 	_adjust = [0, 0, 0]
-	for k in range(len(_cube)):
-		for j in range(len(_cube[k])):
-			for i in range(len(_cube[k][j])):
-				if _cube[k][j][i]:
+	for k in range(len(_block)):
+		for j in range(len(_block[k])):
+			for i in range(len(_block[k][j])):
+				if _block[k][j][i]:
 					_adjust[0] = _ptr[0] - i
 					_adjust[1] = _ptr[1] - j
 					_adjust[2] = _ptr[2] - k
 					return _adjust
 
 def can_put_block(_cube, _ptr, _block):
-	for k in range(len(_cube)):
-		for j in range(len(_cube[k])):
-			for i in range(len(_cube[k][j])):
-				if _cube[k][j][i]:
+	for k in range(len(_block)):
+		for j in range(len(_block[k])):
+			for i in range(len(_block[k][j])):
+				if _block[k][j][i]:
 					# block is over cube
 					if _ptr[0] + i < 0 or CUBE_WITH <= _ptr[0] + i:
 						return False
@@ -262,7 +262,14 @@ def put_piece_recursive(cube, ptr, used):
 				piece = Block(block)
 				piece = copy.deepcopy(piece.turn(turn))
 
+				print('block is ', block)
+				print('piece is ', piece)
+
 				adjust = adjust_position(cube, ptr, piece)
+				print('can_put_block')
+				print(cube)
+				print('adjust is ', adjust)
+				print('piece is ', piece) 
 				if can_put_block(cube, adjust, piece):
 					_cube = copy.deepcopy(cube)
 					_used = copy.deepcopy(used)
@@ -270,6 +277,8 @@ def put_piece_recursive(cube, ptr, used):
 
 					put_block(_cube, adjust, piece, block_value[block])
 					_used.append(block)
+					display_cube(_cube)
+					dumy = input('>> ')
 					if no_more_block(_used):
 						display_cube(_cube)
 						print('----------------')
@@ -277,6 +286,7 @@ def put_piece_recursive(cube, ptr, used):
 							write_solution(_cube)
 					elif not_have_island(_cube, ptr):
 						_ptr = move_next(_cube, ptr)
+						print('next is ', _ptr)
 						put_piece_recursive(_cube, _ptr, _used)
 
 
@@ -284,11 +294,8 @@ def put_piece_recursive(cube, ptr, used):
 
 # init cube
 cube = [[[0 for i in range(CUBE_WITH)] for j in range(CUBE_HEIGHT)] for k in range(CUBE_DEPTH)]
-#ptr = [0, 0, 0]
-#used = []
-
-
-
+ptr = [0, 0, 0]
+used = []
 
 put_piece_recursive(cube, ptr, used)
 
