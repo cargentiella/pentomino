@@ -10,6 +10,8 @@ args = sys.argv
 if len(args) == 2:
 	path = args[1]
 	OUTPUT = True
+else:
+	OUTPUT = False
 
 if OUTPUT:
 	file = open(path, 'w')
