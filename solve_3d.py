@@ -212,6 +212,9 @@ def can_put_block(_cube, _ptr, _block):
 					# block is over cube
 					if _ptr[2] + k < 0 or CUBE_DEPTH <= _ptr[2] + k:
 						return False
+					# block is over another block
+					if _cube[_ptr[2] + k][_ptr[1] + j][_ptr[0] + i] <> 0:
+						return False
 	return True
 
 def island_volume(_cube, _verified, _x, _y, _z):
@@ -262,14 +265,7 @@ def put_piece_recursive(cube, ptr, used):
 				piece = Block(block)
 				piece = copy.deepcopy(piece.turn(turn))
 
-				print('block is ', block)
-				print('piece is ', piece)
-
 				adjust = adjust_position(cube, ptr, piece)
-				print('can_put_block')
-				print(cube)
-				print('adjust is ', adjust)
-				print('piece is ', piece) 
 				if can_put_block(cube, adjust, piece):
 					_cube = copy.deepcopy(cube)
 					_used = copy.deepcopy(used)
@@ -277,8 +273,6 @@ def put_piece_recursive(cube, ptr, used):
 
 					put_block(_cube, adjust, piece, block_value[block])
 					_used.append(block)
-					display_cube(_cube)
-					dumy = input('>> ')
 					if no_more_block(_used):
 						display_cube(_cube)
 						print('----------------')
@@ -286,7 +280,6 @@ def put_piece_recursive(cube, ptr, used):
 							write_solution(_cube)
 					elif not_have_island(_cube, ptr):
 						_ptr = move_next(_cube, ptr)
-						print('next is ', _ptr)
 						put_piece_recursive(_cube, _ptr, _used)
 
 
