@@ -301,6 +301,25 @@ def put_piece_recursive(cube, ptr, used):
 						_ptr = move_next(_cube, ptr)
 						put_piece_recursive(_cube, _ptr, _used)
 
+def put_piece_recursive_first(cube, ptr, used):
+	value = 10
+
+	for turn in Blocks_turn_pattern[value]:
+		piece = turn[0]
+		offset = turn[1]
+
+		adjust = adjust_position(ptr, offset)
+		if can_put_block(cube, adjust, piece):
+			_cube = copy.deepcopy(cube)
+			_used = copy.deepcopy(used)
+			_ptr = [0, 0, 0]
+
+			put_block(_cube, adjust, piece, value + 1)
+			_used.append(value)
+			if not_have_island(_cube, ptr):
+				_ptr = move_next(_cube, ptr)
+				put_piece_recursive(_cube, _ptr, _used)
+
 
 # -------- main --------
 
@@ -310,7 +329,7 @@ cube = [[[0 for i in range(CUBE_WITH)] for j in range(CUBE_HEIGHT)] for k in ran
 ptr = [0, 0, 0]
 used = []
 
-put_piece_recursive(cube, ptr, used)
+put_piece_recursive_first(cube, ptr, used)
 
 if OUTPUT:
 	file.close
