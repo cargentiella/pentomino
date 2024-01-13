@@ -1,9 +1,12 @@
+:toc: left
+:toclevels: 3
+
 = pentomino
 
 a pentomino is a polyomino of order 5, that is, a polygon in the plane made of 5 equal-sized squares connected edge-to-edge.
 
 
-== Plane
+== PLANE
 
 平面
 
@@ -113,7 +116,7 @@ image::docs/square_8x8.jpg[8x8]
 link:./plane_square_8x8.txt[plane_square_8x8.txt]
 
 
-== Solid
+== SOLID
 
 立体
 
