@@ -142,7 +142,7 @@ image::docs/rectangular_2x3x10.jpg[2x3x10]
 link:./solid_rectangular_2x3x10.txt[solid_rectangular_2x3x10.txt]
 
 
-==== rectangular 2x5x6
+==== rectangular_2x5x6
 
 * example
 +
@@ -161,7 +161,7 @@ image::docs/rectangular_2x5x6.jpg[2x5x6]
 link:./solid_rectangular_2x5x6.txt[solid_rectangular_2x5x6.txt]
 
 
-==== rectangular 3x4x5
+==== rectangular_3x4x5
 
 * example
 +
@@ -223,7 +223,7 @@ image::docs/hollow_3x5x7.jpg[3x5x7]
 link:./solid_hollow_3x5x7.txt[solid_hollow_3x5x7.txt]
 
 
-==== hollow 5x3x5
+==== hollow_5x3x5
 
 * example
 +
@@ -247,7 +247,7 @@ link:./solid_hollow_5x3x5.txt[solid_hollow_5x3x5.txt]
 階段型
 
 
-==== hollow_3x3x9
+==== stairs_6x4x4
 
 * example
 +
