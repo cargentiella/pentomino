@@ -15,6 +15,10 @@ a pentomino is a polyomino of order 5, that is, a polygon in the plane made of 5
 
 ==== rectangle_3x20
 
+* example
++
+image::docs/rectangle_3x20.jpg[3x20]
+
 * results
 +
 [cols="2*", options="header"]
@@ -27,12 +31,12 @@ a pentomino is a polyomino of order 5, that is, a polygon in the plane made of 5
 +
 link:./plane_rectangle_3x20.txt[plane_rectangle_3x20.txt]
 
-* example
-+
-image::docs/rectangle_3x20.jpg[3x20]
-
 
 ==== rectangle_4x15
+
+* example
++
+image::docs/rectangle_4x15.jpg[4x15]
 
 * results
 +
@@ -46,12 +50,12 @@ image::docs/rectangle_3x20.jpg[3x20]
 +
 link:./plane_rectangle_4x15.txt[plane_rectangle_4x15.txt]
 
-* example
-+
-image::docs/rectangle_4x15.jpg[4x15]
-
 
 ==== rectangle_5x12
+
+* example
++
+image::docs/rectangle_5x12.jpg[5x12]
 
 * results
 +
@@ -65,12 +69,12 @@ image::docs/rectangle_4x15.jpg[4x15]
 +
 link:./plane_rectangle_5x12.txt[plane_rectangle_5x12.txt]
 
-* example
-+
-image::docs/rectangle_5x12.jpg[5x12]
-
 
 ==== rectangle_6x10
+
+* example
++
+image::docs/rectangle_6x10.jpg[6x10]
 
 * results
 +
@@ -84,10 +88,6 @@ image::docs/rectangle_5x12.jpg[5x12]
 +
 link:./plane_rectangle_6x10.txt[plane_rectangle_6x10.txt]
 
-* example
-+
-image::docs/rectangle_6x10.jpg[6x10]
-
 
 === Square
 
@@ -95,6 +95,10 @@ image::docs/rectangle_6x10.jpg[6x10]
 
 
 ==== square_8x8
+
+* example
++
+image::docs/square_8x8.jpg[8x8]
 
 * results
 +
@@ -107,10 +111,6 @@ image::docs/rectangle_6x10.jpg[6x10]
 * output
 +
 link:./plane_square_8x8.txt[plane_square_8x8.txt]
-
-* example
-+
-image::docs/square_8x8.jpg[8x8]
 
 
 == Solid
@@ -125,6 +125,10 @@ image::docs/square_8x8.jpg[8x8]
 
 ==== rectangular_2x3x10
 
+* example
++
+image::docs/rectangular_2x3x10.jpg[2x3x10]
+
 * results
 +
 [cols="2*", options="header"]
@@ -137,12 +141,12 @@ image::docs/square_8x8.jpg[8x8]
 +
 link:./solid_rectangular_2x3x10.txt[solid_rectangular_2x3x10.txt]
 
-* example
-+
-image::docs/rectangular_2x3x10.jpg[2x3x10]
-
 
 ==== rectangular 2x5x6
+
+* example
++
+image::docs/rectangular_2x5x6.jpg[2x5x6]
 
 * results
 +
@@ -156,12 +160,12 @@ image::docs/rectangular_2x3x10.jpg[2x3x10]
 +
 link:./solid_rectangular_2x5x6.txt[solid_rectangular_2x5x6.txt]
 
-* example
-+
-image::docs/rectangular_2x5x6.jpg[2x5x6]
-
 
 ==== rectangular 3x4x5
+
+* example
++
+image::docs/rectangular_3x4x5.jpg[3x4x5]
 
 * results
 +
@@ -175,10 +179,6 @@ image::docs/rectangular_2x5x6.jpg[2x5x6]
 +
 link:./solid_rectangular_3x4x5.txt[solid_rectangular_3x4x5.txt]
 
-* example
-+
-image::docs/rectangular_3x4x5.jpg[3x4x5]
-
 
 === Hollow
 
@@ -186,6 +186,10 @@ image::docs/rectangular_3x4x5.jpg[3x4x5]
 
 
 ==== hollow_3x3x9
+
+* example
++
+image::docs/hollow_3x3x9.jpg[3x3x9]
 
 * results
 +
@@ -199,12 +203,12 @@ image::docs/rectangular_3x4x5.jpg[3x4x5]
 +
 link:./solid_hollow_3x3x9.txt[solid_hollow_3x3x9.txt]
 
-* example
-+
-image::docs/hollow_3x3x9.jpg[3x3x9]
-
 
 ==== hollow_3x5x7
+
+* example
++
+image::docs/hollow_3x5x7.jpg[3x5x7]
 
 * results
 +
@@ -218,12 +222,12 @@ image::docs/hollow_3x3x9.jpg[3x3x9]
 +
 link:./solid_hollow_3x5x7.txt[solid_hollow_3x5x7.txt]
 
-* example
-+
-image::docs/hollow_3x5x7.jpg[3x5x7]
-
 
 ==== hollow 5x3x5
+
+* example
++
+image::docs/hollow_5x3x5.jpg[5x3x5]
 
 * results
 +
@@ -237,11 +241,26 @@ image::docs/hollow_3x5x7.jpg[3x5x7]
 +
 link:./solid_hollow_5x3x5.txt[solid_hollow_5x3x5.txt]
 
-* example
-+
-image::docs/hollow_5x3x5.jpg[5x3x5]
-
 
 === Stairs
 
 階段型
+
+
+==== hollow_3x3x9
+
+* example
++
+image::docs/stairs_6x4x4.jpg[6x4x4]
+
+* results
++
+[cols="2*", options="header"]
+|===
+| total | uniq
+|       | 
+|===
+
+* output
++
+link:./solid_stairs_6x4x4.txt[solid_stairs_6x4x4.txt]
