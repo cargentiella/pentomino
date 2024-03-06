@@ -250,6 +250,25 @@ link:./solid_hollow_5x3x5.txt[solid_hollow_5x3x5.txt]
 階段型
 
 
+==== stairs_4x5x5
+
+* example
++
+image::docs/stairs_4x5x5.jpg[4x5x5]
+
+* results
++
+[cols="2*", options="header"]
+|===
+| total | uniq
+| 548   | 137
+|===
+
+* output
++
+link:./solid_stairs_6x4x4.txt[solid_stairs_6x4x4.txt]
+
+
 ==== stairs_6x4x4
 
 * example
@@ -261,9 +280,28 @@ image::docs/stairs_6x4x4.jpg[6x4x4]
 [cols="2*", options="header"]
 |===
 | total | uniq
-|       | 
+| 1116  | 279
 |===
 
 * output
 +
 link:./solid_stairs_6x4x4.txt[solid_stairs_6x4x4.txt]
+
+
+==== stairs_10x3x3
+
+* example
++
+image::docs/stairs_10x3x3.jpg[10x3x3]
+
+* results
++
+[cols="2*", options="header"]
+|===
+| total | uniq
+| 36    | 9
+|===
+
+* output
++
+link:./solid_stairs_10x3x3.txt[solid_stairs_10x3x3.txt]

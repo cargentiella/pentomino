@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Rhythm &mdash; One & Multi Page Creative Template</title>
+  <meta name="description" content="Rhythm &mdash; One & Multi Page Creative Template">
+  <meta charset="utf-8">
+  <meta name="author" content="https://themeforest.net/user/bestlooker/portfolio">
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="images/favicon.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'reference/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/css/rhythm.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/css/style-responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/css/vertical-rhythm.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/css/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/css/splitting.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/vendor/Magnific-Popup/css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'reference/vendor/OwlCarousel2/css/owl.carousel.min.css' %}">
+
+</head>
+
+<body class="appear-animate">
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader">Loading...</div>
+  </div>
+  <!-- End Page Loader -->
+
+  <!-- Skip to Content -->
+  <a href="#main" class="btn skip-to-content">Skip to Content</a>
+  <!-- End Skip to Content -->
+
+  <!-- Page Wrap -->
+  <div class="page" id="top">
+
+    <!-- Navigation panel -->
+    {% include "nav.html" %}
+    <!-- End Navigation panel -->
+
+    <main id="main">
+      {% block content %}{% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    {% include "footer.html" %}
+    <!-- End Footer -->
+
+  </div>
+  <!-- End Page Wrap -->
+
+  <!-- JS -->
+  <script src="{% static 'reference/js/jquery.min.js' %}"></script>
+  <script src="{% static 'reference/vendor/Magnific-Popup/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'reference/vendor/OwlCarousel2/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'reference/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'reference/js/SmoothScroll.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.scrollTo.min.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.localScroll.min.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.viewport.mini.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.parallax-1.1.3.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.fitvids.js' %}"></script>
+  <script src="{% static 'reference/js/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'reference/js/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'reference/js/masonry.pkgd.min.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.lazyload.min.js' %}"></script>
+  <script src="{% static 'reference/js/wow.min.js' %}"></script>
+  <script src="{% static 'reference/js/morphext.js' %}"></script>
+  <script src="{% static 'reference/js/typed.min.js' %}"></script>
+  <script src="{% static 'reference/js/all.js' %}"></script>
+  <script src="{% static 'reference/js/contact-form.js' %}"></script>
+  <script src="{% static 'reference/js/jquery.ajaxchimp.min.js' %}"></script>
+  <script src="{% static 'reference/js/objectFitPolyfill.min.js' %}"></script>
+  <script src="{% static 'reference/js/splitting.min.js' %}"></script>
+
+</body>
+
+</html>
